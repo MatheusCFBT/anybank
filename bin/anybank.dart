@@ -1,18 +1,30 @@
 void main() {
-  var contaMatheus = Conta("Matheus", 1000);
-  var contaRoberta = Conta("Roberta", 2000);
-  var contas = <Conta>[contaMatheus, contaRoberta];
+  var accountMatheus = Account("Matheus", 1000);
+  var accountRoberta = Account("Roberta", 2000);
+  var contas = <Account>[accountMatheus, accountRoberta];
   for (var conta in contas) {
     print(conta.owner);
     print(conta.balance);
   }
-  contaRoberta.balance = 5000;
-  print(contaRoberta.balance);
+  accountRoberta.transferMoney(accountMatheus, 500);
+  print(accountMatheus.balance);
+  accountMatheus.transferMoney(accountMatheus, 100);
+  print(accountRoberta.balance);
 }
 
-class Conta {
+class Account {
   String owner;
   double balance;
 
-  Conta(this.owner, this.balance);
+  Account(this.owner, this.balance);
+  
+  void transferMoney(Account accountDestiny, double value) {
+    if (value > balance){
+      print("Could not realize this action because the request value is greater than balance");
+      return;
+    }
+    accountDestiny.balance += value;
+    balance -= value;
+    return;
+  }
 }
